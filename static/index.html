@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Explainable AI - Pipeline Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>📊 Stock Explainable AI</h1>
+                <p class="subtitle">5-Step Pipeline Dashboard</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Button Section -->
+            <div class="button-section">
+                <button id="runBtn" class="run-button">🚀 Run Full Pipeline</button>
+                <span id="status" class="status-text"></span>
+            </div>
+
+            <!-- Pipeline Progress -->
+            <div class="pipeline-container">
+                <h2>Pipeline Execution</h2>
+                
+                <div class="steps">
+                    <!-- Step 1 -->
+                    <div class="step-card">
+                        <div class="step-header">
+                            <span class="step-num">1</span>
+                            <span class="step-name">Data Acquisition</span>
+                            <span id="step1-status" class="step-status">⏳</span>
+                        </div>
+                        <div class="step-body">
+                            <p id="step1-detail">Loading stock data...</p>
+                            <div class="progress-bar">
+                                <div id="step1-progress" class="progress"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step-card">
+                        <div class="step-header">
+                            <span class="step-num">2</span>
+                            <span class="step-name">Knowledge Graph</span>
+                            <span id="step2-status" class="step-status">⏳</span>
+                        </div>
+                        <div class="step-body">
+                            <p id="step2-detail">Building graph...</p>
+                            <div class="progress-bar">
+                                <div id="step2-progress" class="progress"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="step-card">
+                        <div class="step-header">
+                            <span class="step-num">3</span>
+                            <span class="step-name">GNN Propagation</span>
+                            <span id="step3-status" class="step-status">⏳</span>
+                        </div>
+                        <div class="step-body">
+                            <p id="step3-detail">Propagating features...</p>
+                            <div class="progress-bar">
+                                <div id="step3-progress" class="progress"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="step-card">
+                        <div class="step-header">
+                            <span class="step-num">4</span>
+                            <span class="step-name">Temporal Prediction</span>
+                            <span id="step4-status" class="step-status">⏳</span>
+                        </div>
+                        <div class="step-body">
+                            <p id="step4-detail">Making predictions...</p>
+                            <div class="progress-bar">
+                                <div id="step4-progress" class="progress"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="step-card">
+                        <div class="step-header">
+                            <span class="step-num">5</span>
+                            <span class="step-name">Evaluation</span>
+                            <span id="step5-status" class="step-status">⏳</span>
+                        </div>
+                        <div class="step-body">
+                            <p id="step5-detail">Computing metrics...</p>
+                            <div class="progress-bar">
+                                <div id="step5-progress" class="progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metrics Section -->
+            <div class="metrics-container" id="metricsContainer" style="display: none;">
+                <h2>Financial Metrics</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Sharpe Ratio</div>
+                        <div class="metric-value" id="metric-sharpe">1.6393</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Sortino Ratio</div>
+                        <div class="metric-value" id="metric-sortino">2.6639</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Max Drawdown</div>
+                        <div class="metric-value" id="metric-maxdd">-27.05%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Calmar Ratio</div>
+                        <div class="metric-value" id="metric-calmar">2.5971</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Section -->
+            <div class="summary-container" id="summaryContainer" style="display: none;">
+                <h2>Pipeline Summary</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <span class="summary-label">Stocks Processed:</span>
+                        <span class="summary-value" id="summary-stocks">5</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Trading Days:</span>
+                        <span class="summary-value" id="summary-days">501</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Graph Nodes:</span>
+                        <span class="summary-value" id="summary-nodes">5</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Graph Edges:</span>
+                        <span class="summary-value" id="summary-edges">5</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">GNN Output Dim:</span>
+                        <span class="summary-value" id="summary-gnn">128</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Temporal Samples:</span>
+                        <span class="summary-value" id="summary-samples">4</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>✨ Stock Explainable AI | Simple HTML/CSS/JS Dashboard | School Project</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

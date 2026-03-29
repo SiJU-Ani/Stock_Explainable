@@ -1,0 +1,140 @@
+# Stock Explainable AI Configuration
+
+# Data Acquisition
+data:
+  yfinance:
+    interval: "1d"  # daily data
+    start_date: "2020-01-01"
+    end_date: null  # null = today
+  fred:
+    api_key: "${FRED_API_KEY}"  # Set in .env
+    indicators:
+      - "VIXCLS"  # VIX
+      - "CPIAUCSL"  # Inflation
+      - "UNRATE"  # Unemployment
+  news:
+    news_source: "fnspid"  # Financial News and Stock Price Integration Dataset
+    cache_dir: "./data/news"
+    batch_size: 32
+
+# Text Processing
+preprocessing:
+  tokenizer: "distilbert-base-uncased"
+  embedding_model: "sentence-transformers/distilbert-base-uncased-finetuned-sst-2-english"
+  max_sequence_length: 512
+  lowercase: true
+  remove_special_chars: true
+  num_workers: 4
+
+# Graph Construction
+graph:
+  node_type: "company"
+  edge_types:
+    - "supplier"
+    - "customer"
+    - "competitor"
+  graph_backend: "networkx"  # or "dgl"
+  include_macroeconomic_nodes: true
+
+# Agentic Debate Module
+agentic_debate:
+  bull_model: "distilbert-base-uncased"
+  bear_model: "distilbert-base-uncased"
+  judge_model_type: "logistic_regression"  # or "feedforward"
+  judge_hidden_dim: 128
+  judge_dropout: 0.3
+  fine_tuning:
+    learning_rate: 2e-5
+    epochs: 3
+    batch_size: 16
+
+# GNN Module
+gnn:
+  model_type: "gcn"  # GraphConvolution, GAT, GraphSage
+  input_dim: 768  # From embeddings
+  hidden_dim: 256
+  output_dim: 128
+  num_layers: 3
+  dropout: 0.3
+  activation: "relu"
+  aggregation: "mean"  # or "sum", "max"
+
+# Temporal Model
+temporal_model:
+  model_type: "lstm"  # or "transformer", "tft" (Temporal Fusion Transformer)
+  lstm:
+    input_size: 512  # Feature fusion size
+    hidden_size: 128
+    num_layers: 2
+    dropout: 0.3
+    bidirectional: false
+  lookback_window: 60  # days
+  forecast_horizon: 1  # day
+
+# Training
+training:
+  device: "cuda"  # or "cpu"
+  optimizer: "adam"
+  learning_rate: 1e-3
+  learning_rate_schedule: "cosine"  # or "linear", "exponential"
+  batch_size: 32
+  num_epochs: 100
+  early_stopping_patience: 10
+  gradient_clipping: 1.0
+  
+  # Loss functions
+  loss:
+    classification_loss: "bce"  # Binary Cross Entropy
+    regression_loss: "mse"  # Mean Squared Error
+    loss_weights:
+      classification: 0.7
+      regression: 0.3
+  
+  # Regularization
+  regularization:
+    dropout_rate: 0.3
+    l2_weight_decay: 1e-4
+    label_smoothing: 0.1
+
+# Evaluation
+evaluation:
+  metrics:
+    ml_metrics:
+      - "accuracy"
+      - "f1_score"
+      - "roc_auc"
+      - "precision"
+      - "recall"
+    financial_metrics:
+      - "sharpe_ratio"
+      - "max_drawdown"
+      - "cumulative_return"
+      - "sortino_ratio"
+      - "calmar_ratio"
+  
+  # Backtesting
+  backtesting:
+    initial_capital: 100000
+    transaction_costs: 0.001  # 0.1% per trade
+    slippage: 0.0005  # 0.05% slippage
+    risk_free_rate: 0.05  # annual
+
+# Logging & Checkpoints
+logging:
+  level: "INFO"
+  log_dir: "./logs"
+  save_frequency: 5  # Save checkpoint every N epochs
+
+# Experiment Tracking
+experiments:
+  use_wandb: true
+  project: "stock-explainable-ai"
+  entity: "your-username"  # Set in .env
+
+# Paths
+paths:
+  raw_data: "./data/raw"
+  processed_data: "./data/processed"
+  models: "./models"
+  results: "./results"
+  logs: "./logs"
